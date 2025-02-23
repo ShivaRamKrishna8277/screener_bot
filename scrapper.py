@@ -49,4 +49,4 @@ def get_price():
 if __name__ == '__main__':
     while True:
         fetch_stock_price()
-        time.sleep(30)  # 2 requests per minute
+        time.sleep(5)  # 2 requests per minute
