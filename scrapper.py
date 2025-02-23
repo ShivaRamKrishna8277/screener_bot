@@ -28,9 +28,6 @@ def fetch_stock_price():
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Debugging: Print HTML response to check structure
-        print("Fetched HTML:", soup.prettify()[:1000])  # Print first 1000 chars of HTML
-
         # Extract price
         price_element = soup.find(class_="YMlKec fxKbKc")
         if price_element:
