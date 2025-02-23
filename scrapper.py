@@ -15,9 +15,6 @@ CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")  # Set this in Render
 TICKER = "BTC-USD"
 URL = f"https://www.google.com/finance/quote/{TICKER}"
 
-# Store Last Price
-last_price = None
-
 # Function to Fetch Stock Price
 def fetch_stock_price():
     global last_price
@@ -31,11 +28,8 @@ def fetch_stock_price():
 
         print(f"Current Price: ₹{price}")  # Debugging
 
-        # Example Condition: If price drops by ₹10, send an alert
-        if (last_price and price < last_price - 2) or (last_price and price > last_price + 2):
-            send_telegram_alert(price)
+        send_telegram_alert(price)
 
-        last_price = price
         return {"stock": TICKER, "price": price}
 
     except Exception as e:
