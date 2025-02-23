@@ -32,7 +32,7 @@ def fetch_stock_price():
         print(f"Current Price: ₹{price}")  # Debugging
 
         # Example Condition: If price drops by ₹10, send an alert
-        if last_price and price < last_price - 10:
+        if (last_price and price < last_price - 2) or (last_price and price > last_price + 2):
             send_telegram_alert(price)
 
         last_price = price
