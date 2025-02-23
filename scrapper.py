@@ -1,14 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+import os
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# ScraperAPI and Telegram Bot
-API_KEY = "YOUR_SCRAPERAPI_KEY"
-TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
-CHAT_ID = "YOUR_TELEGRAM_CHAT_ID"
+# Load API keys from Render's environment variables
+API_KEY = os.getenv("SCRAPERAPI_KEY")  # Set this in Render
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Set this in Render
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")  # Set this in Render
 
 # Google Finance URL
 TICKER = "KOTAKBANK:NSE"
@@ -28,14 +29,12 @@ def fetch_stock_price():
         price_class = "YMlKec fxKbKc"
         price = float(soup.find(class_=price_class).text.replace("₹", "").replace(",", ""))
 
-        # Print for Debugging
-        print(f"Current Price: ₹{price}")
+        print(f"Current Price: ₹{price}")  # Debugging
 
         # Example Condition: If price drops by ₹10, send an alert
         if last_price and price < last_price - 10:
             send_telegram_alert(price)
 
-        # Update Last Price
         last_price = price
         return {"stock": TICKER, "price": price}
 
